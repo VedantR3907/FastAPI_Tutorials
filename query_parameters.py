@@ -49,6 +49,7 @@ async def get_johnDoe(name: Optional[str] = Query(default='John Doe')):
     raise HTTPException(status_code=404, detail = "No User Found")
 
 
+#Always use Annotated with query parameters or path parameters never write default value as below always write it as = default value , shown in below different examples
 
 
 
