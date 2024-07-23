@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Annotated
 from fastapi.responses import JSONResponse
 
 app = FastAPI()
@@ -47,3 +47,43 @@ async def get_johnDoe(name: Optional[str] = Query(default='John Doe')):
             return JSONResponse(status_code=200, content=existing_user)
     
     raise HTTPException(status_code=404, detail = "No User Found")
+
+
+
+
+
+
+#String Validations in Query Parameters
+@app.get("/search_users/")
+async def search_users(
+    keyword: Annotated[
+        Optional[str],
+        Query(
+            min_length=3,
+            max_length=20,
+            regex="^[a-zA-Z]+$",
+            description="Search keyword for the user's name. Must be between 3 and 20 alphabetic characters.",
+            title="Search Keyword"
+        )
+    ] = None, 
+
+    #This is a new parameter where we have set it as depricated parameter.
+    deprecated_param: Annotated[
+        Optional[str],
+        Query(
+            description="This parameter is deprecated.",
+            deprecated=True
+        )
+    ] = None
+):
+    results = database
+
+    if keyword:
+        results = [user for user in results if keyword.lower() in user["name"].lower()]
+
+    if not results:
+        raise HTTPException(status_code=404, detail="No users found with the specified criteria")
+
+    return results
+
+    #http://127.0.0.1:8000/search_users/?keyword=john
