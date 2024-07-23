@@ -65,9 +65,17 @@ async def search_users(
             description="Search keyword for the user's name. Must be between 3 and 20 alphabetic characters.",
             title="Search Keyword"
         )
-    ] = None, 
-
-    #This is a new parameter where we have set it as depricated parameter.
+    ] = None,
+    #gt is Greater than, lt is less than, ge is greater than and equal, le is less than and equal.
+    age: Annotated[
+        Optional[int],
+        Query(
+            ge=0,
+            le=120,
+            description="Age of the user to filter by. Must be between 0 and 120.",
+            title="User Age"
+        )
+    ] = None,
     deprecated_param: Annotated[
         Optional[str],
         Query(
@@ -81,9 +89,13 @@ async def search_users(
     if keyword:
         results = [user for user in results if keyword.lower() in user["name"].lower()]
 
+    if age is not None:
+        results = [user for user in results if user["age"] == age]
+
     if not results:
         raise HTTPException(status_code=404, detail="No users found with the specified criteria")
 
     return results
 
     #http://127.0.0.1:8000/search_users/?keyword=john
+    #http://127.0.0.1:8000/search_users/?keyword=john&age=30
