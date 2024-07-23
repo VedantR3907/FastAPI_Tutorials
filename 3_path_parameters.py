@@ -4,12 +4,6 @@ from typing import Optional, List, Annotated
 
 app = FastAPI()
 
-# Define a Pydantic model for the user
-class User(BaseModel):
-    name: Optional[str] = None
-    email: str
-    age: int
-
 # Create an in-memory database for demonstration purposes
 database = [
     {"name": "John Doe", "email": "john@example.com", "age": 30},
@@ -17,7 +11,7 @@ database = [
     {"name": "Alice Brown", "email": "alice@example.com", "age": 28}
 ]
 
-@app.get("/users/by_name/{user_name}/by_age/{user_age}", response_model=List[User])
+@app.get("/users/by_name/{user_name}/by_age/{user_age}")
 async def get_users_by_name_and_age(
     user_name: Annotated[
         Optional[str],

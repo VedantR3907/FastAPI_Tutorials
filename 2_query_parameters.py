@@ -5,11 +5,6 @@ from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
-# Define a Pydantic model for the user
-class User(BaseModel):
-    name: Optional[str] = None
-    email: str
-    age: int
 
 # Create an in-memory database for demonstration purposes
 database = [
