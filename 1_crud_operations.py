@@ -9,11 +9,11 @@ database = []
 
 
 # GET REQUESTS
-@app.get("/")
+@app.get("/",  summary="This is the my first api", description="This is a discription", response_description="A string")
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/user/{email}")
+@app.get("/user/{email}", description="A get method to get the user detail with email")
 async def items(email: str):
     for existing_user in database:
         if existing_user.email == email:
@@ -26,7 +26,7 @@ class User(BaseModel):
     email: str
     phone: int
 
-@app.post("/users")
+@app.post("/users", description="A post method to get the users data")
 async def insert_user(user: User):
     for existing_user in database:
         if existing_user.email == user.email:
@@ -42,7 +42,8 @@ class Update_User(BaseModel):
     phone: Optional[int] = None
 
 
-@app.put("/updateUser/{email}")
+#depricated means it is old and new one is already out (just for testing)
+@app.put("/updateUser/{email}", description="To update users data", deprecated=True)
 async def update_user(email: str, user: Update_User):
     for existing_user in database:
         if existing_user.email == email:
@@ -57,7 +58,7 @@ async def update_user(email: str, user: Update_User):
 
 
 #DELETE REQUEST
-@app.delete("/deleteUser/{email}")
+@app.delete("/deleteUser/{email}", description="Deletes user data from database")
 async def delete_user(email: str):
     for existing_user in database:
         if existing_user.email == email:
