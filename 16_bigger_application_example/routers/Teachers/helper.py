@@ -21,6 +21,11 @@ def save_teachers(teachers):
     with open(DATABASE_PATH, "w") as file:
         json.dump(teachers, file, indent=4, default=str)
 
+def generate_id(teachers):
+    if teachers:
+        return max(teacher['id'] for teacher in teachers) + 1
+    return 1
+
 #Check if teacher already exists
 def check_teacher(teachers, new_teacher_roll_no):
     for teacher in teachers:

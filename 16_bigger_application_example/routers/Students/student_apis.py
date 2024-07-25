@@ -1,8 +1,4 @@
-import re
-import json 
-from pathlib import Path
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field, validator
 from typing import Optional, List
 from fastapi.responses import JSONResponse
 from .helper import load_students, save_students, generate_id, check_student

@@ -1,10 +1,8 @@
-import re
 from pydantic import BaseModel, Field, validator
 from typing import Optional, List
 from datetime import date
 
 class Teacher(BaseModel):
-    id: int
     name: str = Field(
         default="Name_Not Specified",
         description="Name of the teacher, should start with capital letters and only contain letters and a single space.",
@@ -50,3 +48,6 @@ class Teacher(BaseModel):
         if v >= date.today():
             raise ValueError("Joined date must be before today's date.")
         return v
+
+class TeacherId(Teacher):
+    id: Optional[int] = Field(description="This is a unique ID of each teacher")  

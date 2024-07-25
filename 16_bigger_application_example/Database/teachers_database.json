@@ -1,11 +1,11 @@
 [
     {
         "id": 0,
-        "name": "Vedant Rajpurohit",
+        "name": "Vedant Purohit",
         "assigned_subjects": [
-            "Mathematics"
+            "Science"
         ],
-        "roll_no": 2,
+        "roll_no": 1,
         "salary": 1500.0,
         "joined_at": "2023-07-25"
     }
